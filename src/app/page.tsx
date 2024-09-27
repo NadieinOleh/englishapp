@@ -1,10 +1,19 @@
-import Image from "next/image";
-import { UserInfo } from "./components/UserInfo/UserInfo";
+'use client'
+
+import LogIn from "./components/LogIn/LogIn";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+
   return (
-  <main className="grid place-items-center h-screen -mt-24">
-    <UserInfo />
-  </main>
+    <main className="flex flex-col justify-center">
+      {status === 'authenticated' && session ? (
+        <h1 className="text-3xl font-bold animate__animated animate__bounce">animate</h1>
+
+      ): (
+        <LogIn />
+      )}
+    </main>
   );
 }

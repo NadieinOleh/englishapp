@@ -9,13 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.8",
+    "@heroicons/react": "^2.1.5",
+    "animate.css": "^4.1.1",
+    "bcryptjs": "^2.4.3",
+    "formik": "^2.4.6",
     "mongoose": "^8.6.0",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "yup": "^1.4.0",
+    "yup-password": "^0.4.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
