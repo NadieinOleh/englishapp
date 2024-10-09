@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { LogInSchema } from "../../utils/yup";
+import { LogInSchema } from "../../../utils/yup";
 import Link from "next/link";
 import { SignInBtn } from "./../SignInBtn/SignInBtn";
 import { signIn } from "next-auth/react";

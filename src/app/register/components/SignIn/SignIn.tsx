@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { SignUpSchema } from "../../utils/yup";
 import { useRouter } from "next/navigation";
-import { checkUserExists } from "@/app/utils/helper";
 import { signIn } from "next-auth/react";
+import { checkUserExists } from "@/utils/helper";
+import { SignUpSchema } from "@/utils/yup";
 
 type Data = {
   email: string;
@@ -19,7 +19,7 @@ const SignIn = () => {
 
   const handleSubmit = async (data: Data, resetForm: any) => {
     const { email, password, name } = data;
-    
+
     try {
       const resUserExists = await checkUserExists(email);
 
@@ -35,7 +35,7 @@ const SignIn = () => {
       if (user) {
         setError("User already exists.");
         resetForm();
-        
+
         return;
       }
 
@@ -184,17 +184,13 @@ const SignIn = () => {
                 Sign up
               </button>
             </Form>
-
-           
           </Formik>
 
           {error && (
-              <p className=" text-sm text-white align-center mt-1 p-2 bg-red-600 text-center rounded-lg">
-                {error}
-              </p>
-            )}
-
-            
+            <p className=" text-sm text-white align-center mt-1 p-2 bg-red-600 text-center rounded-lg">
+              {error}
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -1,9 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import { usePathname } from 'next/navigation'
+
 
 import {
   Disclosure,
@@ -11,12 +13,13 @@ import {
   DisclosurePanel,
   Menu,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
 const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Home", href: "/" },
+  { name: "Your library", href: "/library" },
+  { name: "Projects", href: "#" },
+  { name: "Calendar", href: "#" },
 ];
 
 function classNames(...classes: string[]) {
@@ -25,10 +28,13 @@ function classNames(...classes: string[]) {
 
 export const NavBar = () => {
   const { status, data: session } = useSession();
+  const pathname = usePathname()
+
+  
   return (
-    <header>
+    <header className="border-b-2 border-secondary">
       <Disclosure as="nav" className="bg-primary">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="mx-auto  px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
               {/* Mobile menu button*/}
@@ -56,34 +62,40 @@ export const NavBar = () => {
                     height={30}
                     src="/logoOrange.svg"
                     alt="logo"
-                    className="fill-primaryHover"
+                    className="fill-primaryHover mr-2"
                   />
                 </Link>
               </div>
               <div className="hidden sm:ml-6 sm:block">
-                
-              {status === "authenticated" ? (
-                <div className="flex space-x-4">
-                  {navigation.map(({ name, href, current }) => (
-                    <Link
-                      key={name}
-                      href={href}
-                      aria-current={current ? "page" : undefined}
-                      className={classNames(
-                        current
-                          ? "bg-primaryHover text-white"
-                          : "text-gray-300 hover:bg-secondary hover:text-white",
-                        "rounded-md px-3 py-2 text-sm font-medium"
-                      )}
-                    >
-                      {name}
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <Link href="/" className="animate__animated animate-pulse bg-primaryHover text-white rounded-md px-3 py-2 text-sm font-medium flex hover:bg-secondary">English App by Oleh Nadiein</Link>
-              )}
-          
+                {status === "authenticated" ? (
+                  <div className="flex space-x-4">
+                    {navigation.map(({ name, href }) => {
+                      const current = pathname === href; 
+                      return (
+                        <Link
+                          key={name}
+                          href={href}
+                          aria-current={current ? "page" : undefined}
+                          className={classNames(
+                            current
+                              ? "bg-primaryHover text-white" // Style for active page
+                              : "text-gray-300 hover:bg-secondary hover:text-white", // Style for inactive pages
+                            "rounded-md px-3 py-2 text-sm font-medium"
+                          )}
+                        >
+                          {name}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <Link
+                    href="/"
+                    className="animate__animated animate-pulse bg-primaryHover text-white rounded-md px-3 py-2 text-sm font-medium flex hover:bg-secondary"
+                  >
+                    English App by Oleh Nadiein
+                  </Link>
+                )}
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -148,13 +160,16 @@ export const NavBar = () => {
 
         <DisclosurePanel className="sm:hidden">
           <div className="space-y-1 px-2 pb-3 pt-2">
-            {navigation.map((item) => (
+            {navigation.map((item) => {
+              const current = pathname === item.href; 
+              return (
+              
               <Link key={item.name} href={item.href} passHref>
                 <DisclosureButton
                   as="a"
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={current ? "page" : undefined}
                   className={classNames(
-                    item.current
+                    current
                       ? "bg-primaryHover text-white"
                       : "text-gray-300 hover:bg-secondary hover:text-white",
                     "block rounded-md px-3 py-2 text-base font-medium"
@@ -163,7 +178,7 @@ export const NavBar = () => {
                   {item.name}
                 </DisclosureButton>
               </Link>
-            ))}
+            )})}
           </div>
         </DisclosurePanel>
       </Disclosure>

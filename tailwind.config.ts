@@ -17,8 +17,10 @@ const config: Config = {
       colors: {
         primary: "#16423C", 
         error: "#A02334", 
-        primaryHover: "#7EACB5", 
+        primaryHover: "#53BF9D", 
         secondary: "#FFAD60", 
+        mainText: "#B4D6CD",
+        secondaryHover: "#FFC54D",
       },
     },
   },

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "./components/NavBar/NavBar";
 import { NextAuthProvider } from "./Provider";
+import {  ReduxProvider } from "./storeProvider/storeProvider";
 import "animate.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,10 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          <div className="max-w-screen-2xl mx-auto h-full">
-            <NavBar />
-            {children}
-          </div>
+          <ReduxProvider>
+            <div className="max-w-screen-2xl mx-auto h-full">
+              <NavBar />
+              {children}
+            </div>
+          </ReduxProvider>
         </NextAuthProvider>
       </body>
     </html>
