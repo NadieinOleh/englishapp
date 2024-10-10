@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-main {
+    @apply bg-primary min-h-screen flex-1 p-2 sm:px-6 lg:px-8 max-w-10xl m-auto;
+  }

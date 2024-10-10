@@ -4,13 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    // Parse the incoming request body as JSON
     const { name, email, image } = await request.json();
 
-    // Connect to MongoDB
     await connectMongoDb();
 
-    // Check if the user already exists
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -20,14 +17,12 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create the new user in MongoDB
     const newUser = await User.create({
       name,
       email,
-      image,  // Make sure your User schema supports the image field
+      image,
     });
 
-    // Respond with the newly created user
     return NextResponse.json(
       { message: "User created successfully", user: newUser },
       { status: 201 }

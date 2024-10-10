@@ -16,7 +16,7 @@ export async function GET() {
     const formattedFolders = folders.map((folder) => ({
       id: folder._id,
       title: folder.title,
-      createdAt: folder.createdAt,
+      createdAt: new Date(folder.createdAt).toISOString().split('T')[0],
       flashcards: folder.flashcards,
     }))
 

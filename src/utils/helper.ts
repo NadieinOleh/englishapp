@@ -1,4 +1,3 @@
-import { Console } from "console";
 
 export const checkUserExists = async (email: string) => {
   try {

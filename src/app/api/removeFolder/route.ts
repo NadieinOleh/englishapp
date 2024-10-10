@@ -1,29 +1,22 @@
 import { connectMongoDb } from "@/lib/mongodb";
 import Folder from "@/models/folder";
 import { NextResponse } from "next/server";
-import { ObjectId } from "mongodb"; 
+import { ObjectId } from "mongodb";
 
 export async function DELETE(req: any) {
   try {
     await connectMongoDb();
 
     const { id } = await req.json();
-    
 
     if (!ObjectId.isValid(id)) {
-      return NextResponse.json(
-        { error: "Invalid folder ID" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid folder ID" }, { status: 400 });
     }
 
     const result = await Folder.deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { error: "Folder not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Folder not found" }, { status: 404 });
     }
 
     return NextResponse.json({ message: "Folder deleted successfully" });

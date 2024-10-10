@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { checkFolderExists } from "@/utils/helper";
 import { Folder } from "@/utils/types";
+import Link from "next/link";
 
 const Library = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +24,8 @@ const Library = () => {
   const [folders, setFolder] = useState<Folder[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState<string | null>();
+
+  console.log(folders);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -146,8 +149,11 @@ const Library = () => {
   }
 
   return (
-    <main className="bg-primary min-h-screen flex-1  text-3vh p-2 sm:px-6 lg:px-8 max-w-10xl m-auto">
-      <div className="flex justify-end">
+    <main className="custom-main">
+      <div className="flex justify-start items-center ">
+      <h1 className="mr-5 text-white text-2xl ">Your Library</h1>
+
+
         <button
           className="bg-secondary  hover:bg-primaryHover text-white px-6 py-2 rounded shadow-md"
           onClick={openModal}
@@ -174,19 +180,25 @@ const Library = () => {
       {!isLoading && (
         <ul className="mt-4">
           {folders.map((folder) => (
-            <li
-              className="rounded cursor-pointer text text-lg text-primary hover:bg-secondary hover:border-mainText font-bold border-2 border-white bg-mainText p-4 w-1/2 mb-5 flex justify-between items-center"
-              key={folder.id}
-            >
-              <p className="flex-grow ">{folder.title}</p>
+            <div key={folder.id} className="flex justify-start  items-start">
+              <Link
+                href={`/library/${folder.title}`}
+                className="rounded cursor-pointer text text-lg text-primary hover:bg-secondary hover:border-mainText font-bold border-2 border-white bg-mainText p-4 w-full sm:w-1/2 mb-5 flex justify-between items-center h-16 rounded-r-none"
+              >
+                <li className="w-full">
+                 
+                  <p className="flex-grow">{folder.title}</p>
+                  <p>Created:  {folder.createdAt}</p>
+                </li>
+              </Link>
               <div
-                className="relative w-5 h-5 flex items-center justify-center cursor-pointer"
+                className="w-10 h-16  p-4 flex items-center justify-center cursor-pointer bg-red-500 rounded border-2 border-white border-l-0 rounded-l-none hover:bg-red-600"
+               
                 onClick={() => setId(folder.id)}
               >
-                <div className="absolute w-full h-1 bg-primary transform rotate-45"></div>
-                <div className="absolute w-full h-1 bg-primary transform -rotate-45"></div>
+                <span className="text-white text-1xl">x</span>
               </div>
-            </li>
+            </div>
           ))}
         </ul>
       )}

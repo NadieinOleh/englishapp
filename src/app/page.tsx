@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import LogIn from "./components/LogIn/LogIn";
 import { useSession } from "next-auth/react";
@@ -8,11 +8,12 @@ export default function Home() {
 
   return (
     <main className="flex flex-col justify-center">
-      {status === 'authenticated' && session ? (
-        <h1 className="text-3xl font-bold animate__animated animate__bounce">animate</h1>
-
-      ): (
+      {status === "unauthenticated" && !session ? (
         <LogIn />
+      ) : (
+        <h1 className="text-3xl font-bold animate__animated animate__bounce">
+          animate
+        </h1>
       )}
     </main>
   );
