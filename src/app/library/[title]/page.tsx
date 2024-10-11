@@ -9,18 +9,19 @@ const FlashCards = ({ params }: { params: { title: string } }) => {
         <h1 className="text-white text-3xl font-bold mb-4 sm:text-4xl">
           {params.title}
         </h1>
+        <div className="bg-white w-full h-1 rounded mb-5"></div>
 
-        <div className="flex justify-center items-center gap-2">
-          <Link href="/create-set" className="bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
+          <Link href="/create-set" className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
             Create Flashcards
           </Link>
-          <Link href="/" className="bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
+          <Link href="/" className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
             Create folder
           </Link>
-          <Link href="/" className="bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
+          <Link href="/" className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
             Create folder
           </Link>
-          <Link href="/" className="bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
+          <Link href="/" className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md">
             Create folder
           </Link>
         </div>

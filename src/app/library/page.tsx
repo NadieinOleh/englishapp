@@ -7,6 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import { checkFolderExists } from "@/utils/helper";
 import { Folder } from "@/utils/types";
 import Link from "next/link";
+import Loading from "../components/Loading/Loading";
 
 const Library = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -151,8 +152,9 @@ const Library = () => {
   return (
     <main className="custom-main">
       <div className="flex justify-start items-center ">
-      <h1 className="mr-5 text-white text-2xl ">Your Library</h1>
-
+        <h1 className="text-white text-3xl font-bold  sm:text-4xl mr-5">
+          Your Library
+        </h1>
 
         <button
           className="bg-secondary  hover:bg-primaryHover text-white px-6 py-2 rounded shadow-md"
@@ -162,20 +164,11 @@ const Library = () => {
         </button>
       </div>
 
+      <div className="bg-white w-full h-1 rounded my-5"></div>
+
       {errorGetData && <p className="text-red-500 text-sm">{errorGetData}</p>}
 
-      {isLoading && (
-        <div className="flex justify-center align-center mt-7">
-          <div
-            className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-info motion-reduce:animate-[spin_1.5s_linear_infinite] text-secondary"
-            role="status"
-          >
-            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-              Loading...
-            </span>
-          </div>
-        </div>
-      )}
+      {isLoading && <Loading />}
 
       {!isLoading && (
         <ul className="mt-4">
@@ -186,14 +179,12 @@ const Library = () => {
                 className="rounded cursor-pointer text text-lg text-primary hover:bg-secondary hover:border-mainText font-bold border-2 border-white bg-mainText p-4 w-full sm:w-1/2 mb-5 flex justify-between items-center h-16 rounded-r-none"
               >
                 <li className="w-full">
-                 
                   <p className="flex-grow">{folder.title}</p>
-                  <p>Created:  {folder.createdAt}</p>
+                  <p>Created: {folder.createdAt}</p>
                 </li>
               </Link>
               <div
                 className="w-10 h-16  p-4 flex items-center justify-center cursor-pointer bg-red-500 rounded border-2 border-white border-l-0 rounded-l-none hover:bg-red-600"
-               
                 onClick={() => setId(folder.id)}
               >
                 <span className="text-white text-1xl">x</span>
