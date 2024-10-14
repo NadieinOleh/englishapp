@@ -25,8 +25,7 @@ const Library = () => {
   const [folders, setFolder] = useState<Folder[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState<string | null>();
-
-  console.log(folders);
+  const email = session?.user?.email;
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -84,7 +83,12 @@ const Library = () => {
         flashcards: [],
       };
 
-      const resFolderExists = await checkFolderExists(bodyData.title);
+      if(!bodyData.title.trim()) {
+        setErrorExistFolder('Title is empty');
+        return;
+      }
+
+      const resFolderExists = await checkFolderExists(bodyData.title, bodyData.user);
 
       if (resFolderExists.folder) {
         console.error("Folder already exists");
@@ -200,7 +204,10 @@ const Library = () => {
           placeholder="Title"
           className="rounded border-2 border-secondary w-full p-2"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setErrorExistFolder('')
+            setTitle(e.target.value)}
+          }
         />
 
         <div className="flex justify-between flex-col md:flex-row">

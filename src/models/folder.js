@@ -1,14 +1,23 @@
 import mongoose from "mongoose";
 
 const FlashcardSchema = new mongoose.Schema({
-  word: {
+  term: {
     type: String,
     required: true,
   },
-  translate: {
-    type: [String],
+  definition: {
+    type: String,
     required: true,
   },
+  id: {
+    type: String,
+    required: true,
+  },
+  count: {
+    type: Number,
+    required: true,
+  },
+ 
 });
 
 const FolderSchema = new mongoose.Schema(
@@ -24,6 +33,9 @@ const FolderSchema = new mongoose.Schema(
     flashcards: {
       type: [FlashcardSchema],
       default: [],
+    },
+    description: {
+      type: String,
     },
   },
   { timestamps: true }

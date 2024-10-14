@@ -6,14 +6,15 @@ export async function POST(req: any) {
   try {
     await connectMongoDb();
 
-    const { title } = await req.json();
-    if (!title) {
+    const { title, user } = await req.json();
+    console.log(title, user);
+    if (!title || !user) {
       return NextResponse.json({ error: "title is required" }, { status: 400 });
     }
 
     console.log("Folder data received:", title);
 
-    const folder = await Folder.findOne({ title }).select("_id");
+    const folder = await Folder.findOne({ title, user }).select("_id");
 
     return NextResponse.json({ folder: folder ? folder : null });
   } catch (error) {

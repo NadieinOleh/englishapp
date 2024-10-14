@@ -20,14 +20,14 @@ export const checkUserExists = async (email: string) => {
     throw error; 
   }
 };
-export const checkFolderExists = async (title: string) => {
+export const checkFolderExists = async (title: string, user: string | null | undefined) => {
   try {
     const response = await fetch("/api/folderExists", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ title, user }),
     });
 
     if (!response.ok) {
@@ -41,3 +41,4 @@ export const checkFolderExists = async (title: string) => {
     throw error; 
   }
 };
+

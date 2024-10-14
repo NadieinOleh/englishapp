@@ -1,13 +1,20 @@
 "use client";
 
-import React, { useId, useState } from "react";
-import { Flashcard, HandleInputChange } from "@/utils/types";
-import Card from "./components/Card";
+import React, { useId, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
+import Card from "./components/Card";
+import { Flashcard, HandleInputChange } from "@/utils/types";
+import { RootState } from "@/lib/store/store";
 const CreateSet = () => {
   const id = useId();
   const [isDisabled, setIsDisabled] = useState(true);
   const [isRemoved, setIsRemoved] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const [description, setDescription] = useState("");
+  const router = useRouter();
 
   const [flashcard, setFlashcard] = useState([
     {
@@ -17,11 +24,21 @@ const CreateSet = () => {
     },
   ]);
 
+  const title = useSelector(({ title }: RootState) => title.title);
+  const [createSetError, setCreateSetError] = useState("");
+  const topRef = useRef<HTMLDivElement>(null);
+
+  const handleScrollToTop = () => {
+    topRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const handleInputChange: HandleInputChange = (
     id: string,
     field: keyof Flashcard,
     value: string
   ) => {
+    setCreateSetError("");
+
     setFlashcard((prev) =>
       prev.map((card) => (card.id === id ? { ...card, [field]: value } : card))
     );
@@ -29,6 +46,7 @@ const CreateSet = () => {
 
   const addFlashCard = () => {
     setIsRemoved(null);
+    setCreateSetError("");
 
     setFlashcard((prev) => [
       ...prev,
@@ -46,6 +64,7 @@ const CreateSet = () => {
   };
 
   const removeFlashCard = (id: string) => {
+    setCreateSetError("");
     setIsRemoved(id);
     setTimeout(() => {
       setFlashcard((prev) => prev.filter((card) => id !== card.id));
@@ -56,8 +75,32 @@ const CreateSet = () => {
     }
   };
 
+  const createFlashcards = async () => {
+    const res = await fetch("/api/createSet", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        flashcards: flashcard,
+        user: session?.user?.email,
+        description,
+      }),
+    });
+
+    if (!res.ok) {
+      console.log("error with create set");
+      setCreateSetError("Failed to create set");
+      handleScrollToTop();
+      return;
+    }
+
+    return router.push(`/library/${title}`);
+  };
+
   return (
-    <div className="custom-main">
+    <div className="custom-main" ref={topRef}>
       <div className="flex justify-start items-center gap-4 mb-4">
         <h1 className="text-white  text-2xl font-bold  sm:text-4xl">
           Create a new flashcard set
@@ -67,6 +110,7 @@ const CreateSet = () => {
           type="button"
           disabled={isDisabled}
           value={"Create"}
+          onClick={createFlashcards}
           className={` p-2 rounded border-2 font-bold  
     ${
       !isDisabled
@@ -80,12 +124,19 @@ const CreateSet = () => {
     }
   `}
         />
+
+        <p className="text-red-500 text-2xl font-bold animate-pulse">
+          {createSetError}
+        </p>
       </div>
+
       <div className="bg-white w-full h-1 rounded "></div>
 
       <div className="my-5 flex-col">
         <textarea
           placeholder="Description"
+          value={description}
+          onChange={({ target }) => setDescription(target.value)}
           className=" h-20 text-lg font-bold text-primary resize-none w-full md:w-1/2 rounded bg-gray-400 p-2 focus:outline-none focus:border-b-4 border-b-secondary placeholder:text-gray-200 mb-5"
         />
 
@@ -113,6 +164,7 @@ const CreateSet = () => {
               type="button"
               disabled={isDisabled}
               value={"Create"}
+              onClick={createFlashcards}
               className={` p-2 px-10  rounded border-2 font-bold  
     ${
       !isDisabled
