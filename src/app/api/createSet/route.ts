@@ -20,7 +20,6 @@ export async function POST(req: any) {
       { title, user },
       { $set: { flashcards, description } },
     );
-    console.log("folder", folder);
 
     return NextResponse.json({
       message: "Failed to create set",

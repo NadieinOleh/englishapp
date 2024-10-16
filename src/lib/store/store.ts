@@ -10,14 +10,34 @@ import {
   REGISTER,
 } from "redux-persist";
 import titleReducer from "./features/title/titleSlice";
+import flashcardReducer from "./features/flashcards/flashcardSlice";
+
+const createNoopStorage = () => {
+  return {
+    getItem(_key: string) {
+      return Promise.resolve(null);
+    },
+    setItem(_key: string, value: any) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key: string) {
+      return Promise.resolve();
+    },
+  };
+};
+
+const isClient = typeof window !== "undefined";
+const storageToUse = isClient ? storage : createNoopStorage();
 
 const rootReducer = combineReducers({
   title: titleReducer,
+  flashcards: flashcardReducer,
 });
 
 const persistConfig = {
-  key: "title",
-  storage,
+  key: "root",
+  storage: storageToUse,
+  whitelist: ["title", "flashcards"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

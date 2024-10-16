@@ -9,6 +9,7 @@ export type Flashcard = {
   id: string;
   term: string;
   definition: string;
+  count?: number;
 };
 
 export type HandleInputChange = (

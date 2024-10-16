@@ -1,16 +1,46 @@
 "use client";
 
 import { addTitle } from "@/lib/store/features/title/titleSlice";
+import { RootState } from "@/lib/store/store";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Flashcard } from "@/utils/types";
+import { addFlashcards } from "@/lib/store/features/flashcards/flashcardSlice";
+import Loading from "@/app/components/Loading/Loading";
 
 const FlashCards = ({ params }: { params: { title: string } }) => {
   const dispatch = useDispatch();
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const { flashcards: flashRedux } = useSelector(
+    (state: RootState) => state.flashcards
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(flashRedux, "flash");
+  const getData = async (title: string) => {
+    try {
+      setIsLoading(true);
+      const url = `/api/getFlashcards?title=${encodeURIComponent(title)}`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      setFlashcards(data.flashcards);
+      dispatch(addFlashcards(data.flashcards));
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(addTitle(params.title));
   }, [dispatch, params.title]);
+
+  useEffect(() => {
+    getData(params.title);
+  }, [params.title]);
 
   return (
     <main className="custom-main">
@@ -47,7 +77,14 @@ const FlashCards = ({ params }: { params: { title: string } }) => {
           </Link>
         </div>
 
-        <p>This is a dynamic blog post page for .</p>
+        {isLoading && <Loading />}
+
+        {flashcards.map((card) => (
+          <div key={card.id}>
+            <p> {card.term ? card.term : "..."}</p>
+            <p>{card.definition ? card.definition : "..."}</p>
+          </div>
+        ))}
       </div>
     </main>
   );
