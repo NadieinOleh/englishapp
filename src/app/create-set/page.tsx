@@ -146,7 +146,6 @@ const CreateSet = () => {
             handleInputChange={handleInputChange}
             removeFlashCard={removeFlashCard}
             isRemoved={isRemoved}
-            id={id}
           />
 
           <div className="h-fit mb-5 w-full flex-col rounded bg-gray-400 flex justify-center items-center px-4 py-6">

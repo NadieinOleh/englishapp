@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { connectMongoDb } from "@/lib/mongodb";
 import Folder from "@/models/folder";
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   try {
     await connectMongoDb();
 

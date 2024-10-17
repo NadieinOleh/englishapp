@@ -1,9 +1,9 @@
 import { connectMongoDb } from "@/lib/mongodb";
 import Folder from "@/models/folder";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { ObjectId } from "mongodb";
 
-export async function DELETE(req: any) {
+export async function DELETE(req: NextRequest) {
   try {
     await connectMongoDb();
 

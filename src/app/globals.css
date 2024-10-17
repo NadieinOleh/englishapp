@@ -5,3 +5,28 @@
 .custom-main {
     @apply bg-primary min-h-screen flex-1 p-2 sm:px-6 lg:px-8 max-w-10xl m-auto;
   }
+
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s;
+    transform-style: preserve-3d;
+  }
+  
+  .flashcard-flipped {
+    transform: rotateX(180deg);
+  }
+  
+  .flashcard-front,
+  .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 0.75rem; /* Matches Tailwind rounded-lg */
+  }
+  
+  .flashcard-back {
+    transform: rotateX(180deg);
+  }

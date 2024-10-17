@@ -1,22 +1,20 @@
 "use client";
 
 import { addTitle } from "@/lib/store/features/title/titleSlice";
-import { RootState } from "@/lib/store/store";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Flashcard } from "@/utils/types";
+import { useDispatch } from "react-redux";
+import { Flashcard as Card } from "@/utils/types";
 import { addFlashcards } from "@/lib/store/features/flashcards/flashcardSlice";
+import Flashcard from "./components/Flashcard/Flashcard";
+import { LINKS, CREATE } from "@/utils/constants";
 import Loading from "@/app/components/Loading/Loading";
 
 const FlashCards = ({ params }: { params: { title: string } }) => {
   const dispatch = useDispatch();
-  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
-  const { flashcards: flashRedux } = useSelector(
-    (state: RootState) => state.flashcards
-  );
+  const [flashcards, setFlashcards] = useState<Card[]>([]);
+ 
   const [isLoading, setIsLoading] = useState(false);
-  console.log(flashRedux, "flash");
   const getData = async (title: string) => {
     try {
       setIsLoading(true);
@@ -33,7 +31,6 @@ const FlashCards = ({ params }: { params: { title: string } }) => {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     dispatch(addTitle(params.title));
   }, [dispatch, params.title]);
@@ -50,41 +47,30 @@ const FlashCards = ({ params }: { params: { title: string } }) => {
         </h1>
         <div className="bg-white w-full h-1 rounded mb-5"></div>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
-          <Link
-            href="/create-set"
-            className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md"
-          >
-            Create Flashcards
-          </Link>
-          <Link
-            href="/"
-            className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md"
-          >
-            Edit Flashcards
-          </Link>
-          <Link
-            href="/"
-            className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md"
-          >
-            Create folder
-          </Link>
-          <Link
-            href="/"
-            className="w-full sm:w-fit bg-mainText border-b-8 border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-10 py-10 rounded shadow-md"
-          >
-            Create folder
-          </Link>
+
+        <div className="flex flex-row max-[861px]:flex-col max-[861px]:w-[100%] justify-center items-stretch gap-2">
+          {LINKS.map(({ title, href }) => {
+            const isDisabled =
+              flashcards.length !== 0 && title === CREATE;
+
+            return (
+              <Link key={title} href={href}>
+                <input
+                  className="w-full min-[861px]:w-fit bg-mainText border-y-8 border-t-mainText border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary  px-5 py-3 sm:py-5 sm:px-10 rounded shadow-md cursor-pointer disabled:bg-gray-300 disabled:hover:border-b-gray-300 disabled:border-t-gray-300 disabled:cursor-not-allowed disabled:text-gray-400"
+                  disabled={isDisabled}
+                  type="button"
+                  value={title}
+                />
+              </Link>
+            );
+          })}
         </div>
 
-        {isLoading && <Loading />}
-
-        {flashcards.map((card) => (
-          <div key={card.id}>
-            <p> {card.term ? card.term : "..."}</p>
-            <p>{card.definition ? card.definition : "..."}</p>
-          </div>
-        ))}
+        {isLoading ? ( 
+          <Loading /> 
+          ) : (
+<Flashcard  />
+        )}
       </div>
     </main>
   );

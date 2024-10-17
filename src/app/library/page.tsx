@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Modal from "./components/Modal";
+import Modal from "./components/Modal/Modal";
 import { useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { checkFolderExists } from "@/utils/helper";
 import { Folder } from "@/utils/types";
 import Link from "next/link";
 import Loading from "../components/Loading/Loading";
+import { useDispatch } from "react-redux";
+import {addDescription} from "@/lib/store/features/description/descriptionSlice"
 
 const Library = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,8 +27,7 @@ const Library = () => {
   const [folders, setFolder] = useState<Folder[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState<string | null>();
-  const email = session?.user?.email;
-
+const dispatch = useDispatch()
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -142,14 +143,7 @@ const Library = () => {
   if (status === "loading") {
     return (
       <main className="bg-primary min-h-screen flex-1  text-3vh p-2 sm:px-6 lg:px-8 max-w-10xl m-auto">
-        <div className="flex justify-center items-center min-h-screen">
-          <div
-            className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-info motion-reduce:animate-[spin_1.5s_linear_infinite] text-secondary"
-            role="status"
-          >
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
+        <Loading />
       </main>
     );
   }
@@ -176,27 +170,30 @@ const Library = () => {
       {isLoading && <Loading />}
 
       {!isLoading && (
-        <ul className="mt-4">
-          {folders.map((folder) => (
-            <div key={folder.id} className="flex justify-start  items-start">
-              <Link
-                href={`/library/${folder.title}`}
-                className="rounded cursor-pointer text text-lg text-primary hover:bg-secondary hover:border-mainText font-bold border-2 border-white bg-mainText p-4 w-full sm:w-1/2 mb-5 flex justify-between items-center h-16 rounded-r-none"
-              >
-                <li className="w-full">
-                  <p className="flex-grow">{folder.title}</p>
-                  <p>Created: {folder.createdAt}</p>
-                </li>
-              </Link>
-              <div
-                className="w-10 h-16  p-4 flex items-center justify-center cursor-pointer bg-red-500 rounded border-2 border-white border-l-0 rounded-l-none hover:bg-red-600"
-                onClick={() => setId(folder.id)}
-              >
-                <span className="text-white text-1xl">x</span>
-              </div>
-            </div>
-          ))}
-        </ul>
+       <ul className="mt-4 flex gap-5 flex-col">
+       {folders.map((folder) => (
+         <div key={folder.id} className="flex justify-start  h-max ">
+           <Link
+             href={`/library/${folder.title}`}
+             onClick={() => dispatch(addDescription(folder?.description ?? ''))}
+             className="rounded cursor-pointer text text-lg text-primary hover:bg-secondary hover:border-mainText font-bold border-2 border-white bg-mainText p-4 w-full sm:w-1/2  flex justify-between items-center h-full rounded-r-none"
+           >
+             <li className="w-full">
+               <p className="flex-grow">{folder.title}</p>
+               <p>Created: {folder.createdAt}</p>
+               {folder.description && <p>{folder.description}</p>}
+             </li>
+           </Link>
+           <div
+             className="w-10 p-4  flex items-center justify-center cursor-pointer bg-red-500 rounded border-2 border-white border-l-0 rounded-l-none hover:bg-red-600  "
+             onClick={() => setId(folder.id)}
+           >
+             <span className="text-white text-1xl">x</span>
+           </div>
+         </div>
+       ))}
+     </ul>
+     
       )}
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>

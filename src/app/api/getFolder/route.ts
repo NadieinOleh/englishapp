@@ -18,6 +18,7 @@ export async function GET() {
       title: folder.title,
       createdAt: new Date(folder.createdAt).toISOString().split('T')[0],
       flashcards: folder.flashcards,
+      description: folder.description,
     }))
 
     return NextResponse.json(formattedFolders);

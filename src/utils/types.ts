@@ -1,8 +1,9 @@
 export interface Folder {
   id: string;
   title: string;
-  flashcards: any[];
+  flashcards: Flashcard[];
   createdAt: string;
+  description?: string;
 }
 
 export type Flashcard = {

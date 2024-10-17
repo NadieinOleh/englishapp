@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
     console.log("folders:", folders);
 
-    const flashcards = folders.map((folder) => folder.flashcards).flat(); // Собираем все flashcards
+    const flashcards = folders.map((folder) => folder.flashcards).flat(); 
 
     return NextResponse.json({ flashcards });
   } catch (error) {

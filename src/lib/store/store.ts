@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import titleReducer from "./features/title/titleSlice";
 import flashcardReducer from "./features/flashcards/flashcardSlice";
+import descriptionReducer from "./features/description/descriptionSlice";
 
 const createNoopStorage = () => {
   return {
@@ -32,12 +33,13 @@ const storageToUse = isClient ? storage : createNoopStorage();
 const rootReducer = combineReducers({
   title: titleReducer,
   flashcards: flashcardReducer,
+  description: descriptionReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage: storageToUse,
-  whitelist: ["title", "flashcards"],
+  whitelist: ["title", "flashcards, description"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
