@@ -7,12 +7,11 @@ export async function POST(req: NextRequest) {
     await connectMongoDb();
 
     const { title, user } = await req.json();
-    console.log(title, user);
+
     if (!title || !user) {
       return NextResponse.json({ error: "title is required" }, { status: 400 });
     }
 
-    console.log("Folder data received:", title);
 
     const folder = await Folder.findOne({ title, user }).select("_id");
 

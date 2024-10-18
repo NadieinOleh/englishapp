@@ -1,4 +1,6 @@
 export const CREATE = "Create Flashcards";
+export const EDIT = "Edit";
+export const REMOVE = "Remove";
 
 export const LINKS = [
   {
@@ -6,11 +8,11 @@ export const LINKS = [
     href: "/create-set",
   },
   {
-    title: "Edit ",
+    title: EDIT,
     href: "/edit-set",
   },
   {
-    title: "Remove",
+    title: REMOVE,
     href: "",
   },
   {

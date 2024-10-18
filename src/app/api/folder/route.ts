@@ -4,7 +4,6 @@ import Folder from "./../../../models/folder";
 export async function POST(req: NextRequest) {
   try {
     const { title, user } = await req.json();
-    console.log("Folder data received:", title, user);
 
     await connectMongoDb();
 

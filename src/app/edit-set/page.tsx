@@ -1,68 +1,136 @@
-'use client'
+"use client";
 
-import { RootState } from '@/lib/store/store';
-import React, {useState} from 'react'
-import { useSelector } from "react-redux";
-import { Flashcard } from "@/utils/types";
-
-
+import { RootState } from "@/lib/store/store";
+import React, { useState, useRef, useId, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { HandleInputChange } from "@/utils/types";
+import TitleSet from "../components/TitleSet/TitleSet";
+import ButtonSet from "../components/ButtonSet/ButtonSet";
+import TextareaSet from "../components/TextareaSet/TextareaSet";
+import { handleScrollToTop } from "@/utils/helper";
+import Card from "../create-set/components/Card";
+import AddBtnSet from "../components/AddBtnSet/AddBtnSet";
+import { useFlashcards } from "@/utils/hooks";
+import ErrorMessage from "../components/ErrorSet/ErrorSet";
+import { useRouter } from "next/navigation";
+import { addFlashcards } from "@/lib/store/features/flashcards/flashcardSlice";
+import { addDescription } from "@/lib/store/features/description/descriptionSlice";
 
 const Edit = () => {
-const {flashcards} = useSelector(({flashcards}: RootState) => flashcards)
-const {description} = useSelector(({description}: RootState) => description)
-const [newDesc, setNewDesc] = useState(description)
+  const { flashcards: initialFlashcards } = useSelector(
+    ({ flashcards }: RootState) => flashcards
+  );
+  const { description: initialDescription } = useSelector(
+    ({ description }: RootState) => description
+  );
+  const { title } = useSelector(({ title }: RootState) => title);
 
-console.log(description)
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const {
+    flashcards,
+    handleInputChange,
+    addFlashCard,
+    removeFlashCard,
+    isRemoved,
+    error,
+    setError,
+  } = useFlashcards(initialFlashcards);
+
+  const [newDesc, setNewDesc] = useState(initialDescription);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const topRef = useRef<HTMLDivElement>(null);
+  const id = useId();
+
+  useEffect(()=> {
+    dispatch(addDescription(newDesc));
+    dispatch(addFlashcards(flashcards));
+  }, [newDesc, flashcards, dispatch])
+
+  const editFlashcards = async () => {
+    try {
+      const res = await fetch(
+        `api/editFlashcards?title=${encodeURIComponent(title)}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ flashcards, newDesc }),
+        }
+      );
+
+      if (!res.ok) {
+        setError("Failed to edit set");
+        handleScrollToTop(topRef);
+        setIsDisabled(false);
+        return;
+      }
+
+   
+      router.push(`/library/${title}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleAddFlashCard = () => {
+    addFlashCard(id);
+    if (flashcards.length >= 2) {
+      setIsDisabled(false);
+    }
+  };
+
+  const handleRemoveFlashCard = (cardId: string) => {
+    removeFlashCard(cardId);
+    if (flashcards.length <= 3) {
+      setIsDisabled(true);
+    }
+  };
 
   return (
-    <main className='custom-main'>
-        <h1 className="text-white  text-2xl font-bold  sm:text-4xl mb-4">
-          Edit flashcard set
-        </h1>
+    <main className="custom-main" ref={topRef}>
+      <div className="flex justify-start items-center gap-4 mb-4">
+        <TitleSet title="Edit Flashcards" />
 
-        <div className="bg-white w-full h-1 rounded "></div>
-
-        <textarea
-          placeholder="Description"
-          value={newDesc}
-          onChange={({ target }) => setNewDesc(target.value)}
-          className="mt-5 h-20 text-lg font-bold text-primary resize-none w-full md:w-1/2 rounded bg-gray-400 p-2 focus:outline-none focus:border-b-4 border-b-secondary placeholder:text-gray-200 mb-5"
+        <ButtonSet
+          value="Edit"
+          isDisabled={isDisabled}
+          createOrEdit={editFlashcards}
+          style={true}
         />
 
-<div>
-      {flashcards.map((card: Flashcard, index) => (
-        <div
-          className={`h-fit w-full flex-col rounded bg-gray-400 mb-5`}
-          key={card.id}
-        >
-         
+        <ErrorMessage message={error} />
+      </div>
 
-          <div className="px-4 py-6  sm:flex justify-between items-center gap-6">
-            <label className="w-full ">
-              <input
-                placeholder="Enter term"
-                className="w-full outline-none bg-transparent border-b-2 border-b-gray-200 focus:outline-none focus:border-b-secondary placeholder:font-semibold placeholder:text-md placeholder:text-gray-200 text-md text-gray-200 mb-2 focus:border-b-4 focus:ease-in-out duration-200"
-                value={card.term}
-               
-              />
-              <p className="text-md text-gray-200 mb-5 sm:mb-0">TERM</p>
-            </label>
+      <div className="bg-white w-full h-1 rounded"></div>
 
-            <label className="w-full">
-              <input
-                placeholder="Enter definition"
-                className="w-full outline-none bg-transparent border-b-2 border-b-gray-200 focus:outline-none focus:border-b-secondary placeholder:font-semibold placeholder:text-md placeholder:text-gray-200 text-md text-gray-200 mb-2 focus:border-b-4 focus:ease-in-out duration-200"
-                value={card.definition}
-                
-              />
-              <p className="text-md text-gray-200">DEFINITION</p>
-            </label>
-          </div>
+      <div className="my-5 flex-col">
+        <TextareaSet description={newDesc} setDescription={setNewDesc} />
+
+        <section>
+          <Card
+            flashCards={flashcards}
+            handleInputChange={handleInputChange}
+            removeFlashCard={handleRemoveFlashCard}
+            isRemoved={isRemoved}
+          />
+        </section>
+
+        <AddBtnSet addFlashCard={handleAddFlashCard} />
+
+        <div className="h-fit w-full flex-col rounded bg-gray-400 flex justify-center items-center px-4 py-6">
+          <ButtonSet
+            isDisabled={isDisabled}
+            createOrEdit={editFlashcards}
+            value={"Edit"}
+            style={false}
+          />
         </div>
-      ))}
-    </div>
+      </div>
     </main>
-  )
-}
+  );
+};
 
-export default Edit
+export default Edit;

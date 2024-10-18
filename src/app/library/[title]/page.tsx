@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { Flashcard as Card } from "@/utils/types";
 import { addFlashcards } from "@/lib/store/features/flashcards/flashcardSlice";
 import Flashcard from "./components/Flashcard/Flashcard";
-import { LINKS, CREATE } from "@/utils/constants";
+import { LINKS, CREATE, EDIT, REMOVE } from "@/utils/constants";
 import Loading from "@/app/components/Loading/Loading";
 
 const FlashCards = ({ params }: { params: { title: string } }) => {
@@ -50,8 +50,8 @@ const FlashCards = ({ params }: { params: { title: string } }) => {
 
         <div className="flex flex-row max-[861px]:flex-col max-[861px]:w-[100%] justify-center items-stretch gap-2">
           {LINKS.map(({ title, href }) => {
-            const isDisabled =
-              flashcards.length !== 0 && title === CREATE;
+          const isDisabled =
+            !!flashcards.length  && title === CREATE || !flashcards.length && ( title === EDIT || title === REMOVE);
 
             return (
               <Link key={title} href={href}>

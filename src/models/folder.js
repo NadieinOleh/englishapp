@@ -3,11 +3,9 @@ import mongoose from "mongoose";
 const FlashcardSchema = new mongoose.Schema({
   term: {
     type: String,
-    required: true,
   },
   definition: {
     type: String,
-    required: true,
   },
   id: {
     type: String,
@@ -15,7 +13,6 @@ const FlashcardSchema = new mongoose.Schema({
   },
   count: {
     type: Number,
-    required: true,
   },
  
 });

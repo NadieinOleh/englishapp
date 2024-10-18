@@ -20,6 +20,7 @@ export const checkUserExists = async (email: string) => {
     throw error; 
   }
 };
+
 export const checkFolderExists = async (title: string, user: string | null | undefined) => {
   try {
     const response = await fetch("/api/folderExists", {
@@ -40,5 +41,11 @@ export const checkFolderExists = async (title: string, user: string | null | und
     console.error("Error in checkUserExists:", error);
     throw error; 
   }
+};
+
+import { RefObject } from 'react';
+
+export const handleScrollToTop = (topRef: RefObject<HTMLDivElement>) => {
+  topRef.current?.scrollIntoView({ behavior: "smooth" });
 };
 
