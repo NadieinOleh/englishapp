@@ -13,7 +13,7 @@ export const checkUserExists = async (email: string) => {
       throw new Error(`Server error: ${response.status}`);
     }
 
-    const result = await response.json();
+    const result = await response;
     return result;
   } catch (error) {
     console.error("Error in checkUserExists:", error);
