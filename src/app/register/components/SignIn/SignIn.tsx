@@ -19,26 +19,16 @@ const SignIn = () => {
 
   const handleSubmit = async (data: Data, resetForm: any) => {
     const { email, password, name } = data;
-
+  
     try {
       const resUserExists = await checkUserExists(email);
-
-      if (!resUserExists.ok) {
-        const errorData = await resUserExists.json();
-        console.error("Error checking user existence:", errorData);
-        setError("Error checking user existence");
-        return;
-      }
-
-      const { user } = await resUserExists.json();
-
-      if (user) {
+  
+      if (resUserExists.user) {
         setError("User already exists.");
         resetForm();
-
         return;
       }
-
+  
       const res = await fetch("/api/user", {
         method: "POST",
         headers: {
@@ -50,20 +40,20 @@ const SignIn = () => {
           name,
         }),
       });
-
+  
       if (!res.ok) {
         const errorData = await res.json();
         console.error("Failed to create user:", errorData);
         setError("Error creating user");
         return;
       }
-
+  
       await signIn("credentials", {
         email,
         password,
         redirect: false,
       });
-
+  
       router.push("/");
     } catch (err) {
       console.error("Error occurred:", err);
