@@ -1,4 +1,4 @@
-import { connectMongoDb } from "@/lib/mongodb";
+import { connectMongoDb } from "@/lib/mongoDb";
 import Folder from "@/models/folder";
 import { NextResponse, NextRequest } from "next/server";
 import { ObjectId } from "mongodb";

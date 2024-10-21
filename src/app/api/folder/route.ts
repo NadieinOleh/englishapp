@@ -1,4 +1,4 @@
-import { connectMongoDb } from "@/lib/mongodb";
+import { connectMongoDb } from "@/lib/mongoDb";
 import { NextResponse, NextRequest } from "next/server";
 import Folder from "./../../../models/folder";
 export async function POST(req: NextRequest) {
