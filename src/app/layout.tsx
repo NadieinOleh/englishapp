@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextAuthProvider>
           <ReduxProvider>
-            <div className="max-w-screen-2xl mx-auto h-full">
+            <div className="max-w-screen-2xl mx-auto h-full flex flex-col min-h-[100vh]">
               <NavBar />
               {children}
             </div>

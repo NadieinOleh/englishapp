@@ -22,7 +22,6 @@ const SignIn = () => {
   
     try {
       const resUserExists = await checkUserExists(email);
-  
       if (resUserExists.user) {
         setError("User already exists.");
         resetForm();

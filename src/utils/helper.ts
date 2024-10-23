@@ -14,6 +14,7 @@ export const checkUserExists = async (email: string) => {
     }
 
     const result = await response.json();
+    console.log(response, 'result')
     return result;
   } catch (error) {
     console.error("Error in checkUserExists:", error);

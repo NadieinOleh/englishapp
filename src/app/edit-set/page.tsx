@@ -15,6 +15,9 @@ import ErrorMessage from "../components/ErrorSet/ErrorSet";
 import { useRouter } from "next/navigation";
 import { addFlashcards } from "@/lib/store/features/flashcards/flashcardSlice";
 import { addDescription } from "@/lib/store/features/description/descriptionSlice";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 
 const Edit = () => {
   const { flashcards: initialFlashcards } = useSelector(
@@ -27,6 +30,7 @@ const Edit = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
+  const { data: session } = useSession();
 
   const {
     flashcards,
@@ -88,6 +92,11 @@ const Edit = () => {
       setIsDisabled(true);
     }
   };
+
+  
+  if (!session) {
+    return redirect('/')
+   }
 
   return (
     <main className="custom-main" ref={topRef}>

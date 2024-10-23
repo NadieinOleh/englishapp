@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Card from "./components/Card";
-import { Flashcard, HandleInputChange } from "@/utils/types";
 import { RootState } from "@/lib/store/store";
 import TitleSet from "../components/TitleSet/TitleSet";
 import ButtonSet from "../components/ButtonSet/ButtonSet";
@@ -15,6 +14,7 @@ import AddBtnSet from "../components/AddBtnSet/AddBtnSet";
 import {useFlashcards} from "@/utils/hooks";
 import { addDescription } from "@/lib/store/features/description/descriptionSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { redirect } from "next/navigation";
 
 
 import ErrorMessage from "../components/ErrorSet/ErrorSet";
@@ -31,7 +31,6 @@ const CreateSet = () => {
   const topRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch()
 
-  console.log("flashcards create", flashcards);
 
   const createFlashcards = async () => {
     setIsDisabled(true);
@@ -73,6 +72,10 @@ const CreateSet = () => {
       setIsDisabled(true);
     }
   };
+
+  if (!session) {
+    return redirect('/')
+   }
 
   return (
     <div className="custom-main" ref={topRef}>
