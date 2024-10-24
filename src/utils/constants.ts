@@ -1,6 +1,7 @@
 export const CREATE = "Create Flashcards";
 export const EDIT = "Edit";
 export const REMOVE = "Remove";
+export const SHUFFLE = "Turn over";
 
 export const LINKS = [
   {
@@ -16,7 +17,7 @@ export const LINKS = [
     href: "",
   },
   {
-    title: "blablalbla",
+    title: SHUFFLE,
     href: "",
   },
 ];

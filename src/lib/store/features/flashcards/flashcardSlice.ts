@@ -13,10 +13,8 @@ const flashcardSlice = createSlice({
       state.flashcards = [...action.payload];
     },
 
-    removeFlashcard: (state, action: PayloadAction<string>) => {
-      state.flashcards = state.flashcards.filter(
-        (flashcard) => flashcard.id !== action.payload
-      );
+    removeFlashcard: (state) => {
+      state.flashcards = []
     },
   },
 });
