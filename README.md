@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+        <h1 className="text-3xl text-secondary mb-5 font-bold animate__animated animate__bounce">
+          This app is created as an analogue to Quizlet, for learning foreign words.
+          </h1>
+<ul >
+  <li className="text-lg  text-mainText font-bold">
+  In this app you can:</li>
+  <li className="text-lg  text-mainText font-bold">
+  Create folders for easy learning of words</li>
+  <li className="text-lg  text-mainText font-bold">Create flashcards</li>
+  <li className="text-lg  text-mainText font-bold">Modify</li>
+  <li className="text-lg  text-mainText font-bold">Delete</li>
+  <li className="text-lg  text-mainText font-bold">Flip</li>
+  <li className="text-lg  text-mainText font-bold">There are pages with tips</li>
+  <li className="text-lg  text-mainText font-bold">In the near future it will be possible to make Donations and use the account customisation function.
+  </li>
+</ul>
 
-## Getting Started
+<h2 className="text-3xl mb-5 mt-5 text-secondary  font-bold animate__animated animate__bounce">The technologies that were used:</h2>
 
-First, run the development server:
+<ul>
+  <li className="text-lg  text-mainText font-bold">Next</li>
+  <li className="text-lg  text-mainText font-bold">React</li>
+  <li className="text-lg  text-mainText font-bold">Tailwind</li>
+  <li className="text-lg  text-mainText font-bold">Redux-persist</li>
+  <li className="text-lg  text-mainText font-bold">Next-auth</li>
+  <li className="text-lg  text-mainText font-bold">MongoDb</li>
+  <li className="text-lg  text-mainText font-bold">Mongoose</li>
+  <li className="text-lg  text-mainText font-bold">Formik</li>
+  <li className="text-lg  text-mainText font-bold">Bcryptjs</li>
+  <li className="text-lg  text-mainText font-bold">Swiper</li>
+  <li className="text-lg  text-mainText font-bold">Yup</li>
+  <li className="text-lg  text-mainText font-bold">Animate.css</li>
+  <li className="text-lg  text-mainText font-bold">GoogleApi</li>
+</ul>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

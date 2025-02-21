@@ -4,6 +4,8 @@ import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
+import {TIPS} from '@/utils/constants'
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -11,6 +13,7 @@ import "swiper/css/scrollbar";
 
 const Tips = () => {
   return (
+    
     <div className="custom-main mt-5">
       <Swiper
       style={{
@@ -97,8 +100,24 @@ const Tips = () => {
 </SwiperSlide>
 
       </Swiper>
+      
+      <h1 className="text-center text-xl mt-5 mb-5 text-mainText font-bold">Tips for Learning Words in Quizlet</h1>
+
+<ol className="mb-5">
+  {TIPS.map((tip : {title: string, text: string}, i:number) => (
+    <li key={i} className="mb-3">
+      <h3 className="text-lg  text-mainText font-bold">{tip.title}</h3>
+      <p className="text-lg  text-secondary font-bold">{tip.text}</p>
+    </li>
+  ))}
+</ol>
+
     </div>
+
+
+
   );
+
 };
 
 export default Tips;
