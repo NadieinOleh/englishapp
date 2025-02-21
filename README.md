@@ -1,6 +1,9 @@
-        <h1 className="text-3xl text-secondary mb-5 font-bold animate__animated animate__bounce">
-          This app is created as an analogue to Quizlet, for learning foreign words.
-          </h1>
+<h1 className="text-3xl text-secondary mb-5 font-bold animate__animated animate__bounce">
+This app is created as an analogue to Quizlet, for learning foreign words.
+</h1>
+
+[Link](https://englishapp-neon.vercel.app/)
+
 <ul >
   <li className="text-lg  text-mainText font-bold">
   In this app you can:</li>
