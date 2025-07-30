@@ -5,6 +5,7 @@ import { NavBar } from "./components/NavBar/NavBar";
 import { NextAuthProvider } from "./Provider";
 import { ReduxProvider } from "./storeProvider/storeProvider";
 import "animate.css";
+import { Footer } from "./components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-primary">
+    <html lang="en" className="bg-primary ">
       <body className={inter.className}>
         <NextAuthProvider>
           <ReduxProvider>
-            <div className="max-w-screen-2xl mx-auto h-full flex flex-col min-h-[100vh]">
+            <div className="max-w-screen-xl mx-auto h-full flex flex-col min-h-[100vh]">
               <NavBar />
               {children}
+              <Footer />
             </div>
           </ReduxProvider>
         </NextAuthProvider>

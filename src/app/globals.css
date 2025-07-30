@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .custom-main {
-    @apply bg-primary min-h-screen grow p-2 sm:px-6 lg:px-8 max-w-10xl ;
+    @apply bg-primary  grow p-2 sm:px-6 lg:px-8 max-w-10xl ;
   }
 
   .flashcard-inner {
@@ -30,3 +30,4 @@
   .flashcard-back {
     transform: rotateX(180deg);
   }
+  

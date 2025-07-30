@@ -29,7 +29,7 @@ export const TIPS = [
   },
   {
     title: "Use the 'Write' Mode",
-text: "This mode forces you not just to look at the flashcards but to type the words yourself, which helps reinforce memory."
+    text: "This mode forces you not just to look at the flashcards but to type the words yourself, which helps reinforce memory.",
   },
   {
     title: "Practice in Context",
@@ -63,31 +63,31 @@ text: "This mode forces you not just to look at the flashcards but to type the w
     title: "Say Words Out Loud",
     text: "Reading the word and its translation aloud engages another memory channel—your auditory memory.",
   },
-]
+];
 
+export const TECHNOLOGIES = [
+  "Create folders for easy learning of words.",
+  "Create flashcards",
+  "Modify",
+  "Delete",
+  "Flip",
+  "There are pages with tips",
+  "In the near future it will be possible to make Donations and use the account customisation function",
+  "Make a donate",
+];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const STACKTECH = [
+  "Next",
+  "React",
+  "Tailwind",
+  "Redux-persist",
+  "Next-auth",
+  "MongoDb",
+  "Mongoose",
+  "Formik",
+  "Bcryptjs",
+  "Swiper",
+  "Yup",
+  "Animate.css",
+  "GoogleApi",
+];
