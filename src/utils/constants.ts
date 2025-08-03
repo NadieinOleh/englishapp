@@ -74,11 +74,13 @@ export const TECHNOLOGIES = [
   "There are pages with tips",
   "In the near future it will be possible to make Donations and use the account customisation function",
   "Make a donate",
+  "Switch theme"
 ];
 
 export const STACKTECH = [
   "Next",
   "React",
+  "TypeScript",
   "Tailwind",
   "Redux-persist",
   "Next-auth",
@@ -90,4 +92,11 @@ export const STACKTECH = [
   "Yup",
   "Animate.css",
   "GoogleApi",
+];
+
+export const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Your library", href: "/library" },
+  { name: "Tips", href: "/tips" },
+  { name: "Donation", href: "/donation" },
 ];

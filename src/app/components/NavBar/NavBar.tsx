@@ -1,11 +1,10 @@
 "use client";
 
-import React, { use } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
-import { usePathname } from 'next/navigation'
-
+import { usePathname } from "next/navigation";
 
 import {
   Disclosure,
@@ -14,13 +13,8 @@ import {
   Menu,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Your library", href: "/library" },
-  { name: "Tips", href: "/tips" },
-  { name: "Donation", href: "#" },
-];
+import { ThemeToggle } from "./components/ThemaToggle";
+import { navigation } from "@/utils/constants";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -28,19 +22,17 @@ function classNames(...classes: string[]) {
 
 export const NavBar = () => {
   const { status, data: session } = useSession();
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const [theme, setTheme] = useState("light");
 
-  
   return (
     <header className="border-b-2 border-secondary">
-      <Disclosure as="nav" className="bg-primary">
+      <Disclosure as="nav" className="bg-primary dark:bg-primaryDark">
         <div className="mx-auto  px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-              {/* Mobile menu button*/}
-
               {status === "authenticated" && (
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-secondary hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-secondary hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon
@@ -57,20 +49,30 @@ export const NavBar = () => {
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
                 <Link href="/">
-                  <Image
-                    width={30}
-                    height={30}
-                    src="/logoOrange.svg"
-                    alt="logo"
-                    className="fill-primaryHover mr-2"
-                  />
+                  {theme === "light" ? (
+                    <Image
+                      width={30}
+                      height={30}
+                      src="/logoOrange.svg"
+                      alt="logo"
+                      className=" mr-2"
+                    />
+                  ) : (
+                    <Image
+                      width={30}
+                      height={30}
+                      src="/logoDark.svg"
+                      alt="logo"
+                      className=" mr-2"
+                    />
+                  )}
                 </Link>
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 {status === "authenticated" ? (
                   <div className="flex space-x-4">
                     {navigation.map(({ name, href }) => {
-                      const current = pathname === href; 
+                      const current = pathname === href;
                       return (
                         <Link
                           key={name}
@@ -78,8 +80,8 @@ export const NavBar = () => {
                           aria-current={current ? "page" : undefined}
                           className={classNames(
                             current
-                              ? "bg-primaryHover text-white" // Style for active page
-                              : "text-gray-300 hover:bg-secondary hover:text-white", // Style for inactive pages
+                              ? "bg-primaryHover dark:bg-primaryHoverDark text-white" // Style for active page
+                              : "text-gray-300 dark:border-primary dark:border-2 hover:bg-secondary hover:text-white", // Style for inactive pages
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
                         >
@@ -91,25 +93,29 @@ export const NavBar = () => {
                 ) : (
                   <Link
                     href="/"
-                    className="animate__animated animate-pulse bg-primaryHover text-white rounded-md px-3 py-2 text-sm font-medium flex hover:bg-secondary"
+                    className="animate__animated animate-pulse bg-primaryHover dark:bg-primaryHoverDark text-white rounded-md px-3 py-2 text-sm font-medium flex hover:bg-secondary"
                   >
                     English App by Oleh Nadiein
                   </Link>
                 )}
               </div>
             </div>
+
+            <div className="hidden sm:block px-2">
+              <ThemeToggle theme={theme} setTheme={setTheme} />
+            </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {status === "authenticated" ? (
                 <button
                   onClick={() => signOut()}
-                  className="bg-secondary hover:bg-primaryHover text-white px-6 py-2 rounded  flex justify-content items-center shadow-md"
+                  className="bg-secondary dark:hover:bg-secondaryDark  hover:bg-primaryHover dark:bg-primaryHoverDark text-white px-6 py-2 rounded  flex justify-content items-center shadow-md dark:border dark:border-backgroundDark"
                 >
                   Sign out
                 </button>
               ) : (
                 <button
                   onClick={() => signIn("google")}
-                  className="bg-secondary hover:bg-primaryHover text-white px-6 py-2 rounded  flex justify-content items-center shadow-md"
+                  className="bg-secondary hover:bg-primaryHover dark:bg-primaryHoverDark text-white px-6 py-2 rounded  flex justify-content items-center shadow-md dark:border dark:border-backgroundDark"
                 >
                   Sign in
                 </button>
@@ -161,24 +167,28 @@ export const NavBar = () => {
         <DisclosurePanel className="sm:hidden">
           <div className="space-y-1 px-2 pb-3 pt-2">
             {navigation.map((item) => {
-              const current = pathname === item.href; 
+              const current = pathname === item.href;
               return (
-              
-              <Link key={item.name} href={item.href} passHref>
-                <DisclosureButton
-                  as="a"
-                  aria-current={current ? "page" : undefined}
-                  className={classNames(
-                    current
-                      ? "bg-primaryHover text-white"
-                      : "text-gray-300 hover:bg-secondary hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                >
-                  {item.name}
-                </DisclosureButton>
-              </Link>
-            )})}
+                <Link key={item.name} href={item.href} passHref>
+                  <DisclosureButton
+                    as="a"
+                    aria-current={current ? "page" : undefined}
+                    className={classNames(
+                      current
+                        ? "bg-primaryHover dark:bg-primaryHoverDark text-white"
+                        : "text-gray-300 hover:bg-secondary hover:text-white",
+                      "block rounded-md px-3 py-2 text-base font-medium"
+                    )}
+                  >
+                    {item.name}
+                  </DisclosureButton>
+                </Link>
+              );
+            })}
+
+            <div className="px-3">
+              <ThemeToggle theme={theme} setTheme={setTheme} />
+            </div>
           </div>
         </DisclosurePanel>
       </Disclosure>

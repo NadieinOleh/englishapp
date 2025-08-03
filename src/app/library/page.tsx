@@ -146,7 +146,7 @@ const Library = () => {
 
   if (status === "loading") {
     return (
-      <main className="bg-primary min-h-screen flex-1  text-3vh p-2 sm:px-6 lg:px-8 max-w-10xl m-auto">
+      <main className="bg-primary dark:bg:primaryDark min-h-screen flex-1  text-3vh p-2 sm:px-6 lg:px-8 max-w-10xl m-auto">
         <Loading />
       </main>
     );
@@ -164,7 +164,7 @@ const Library = () => {
         </h1>
 
         <button
-          className="bg-secondary  hover:bg-primaryHover text-white px-6 py-2 rounded shadow-md"
+          className="bg-secondary  hover:bg-primaryHover dark:hover:bg-primaryHoverDark text-white px-6 py-2 rounded shadow-md"
           onClick={openModal}
         >
           Create folder
@@ -186,7 +186,7 @@ const Library = () => {
                 onClick={() =>
                   dispatch(addDescription(folder?.description ?? ""))
                 }
-                className="rounded cursor-pointer text text-lg text-primary hover:bg-secondary hover:border-mainText font-bold border-2 border-white bg-mainText p-4 w-full sm:w-1/2  flex justify-between items-center h-full rounded-r-none"
+                className="rounded cursor-pointer text text-lg text-primary dark:text-primaryDark hover:bg-secondary hover:border-mainText font-bold border-2 border-white bg-mainText p-4 w-full sm:w-1/2  flex justify-between items-center h-full rounded-r-none"
               >
                 <li className="w-full">
                   <p className="flex-grow">{folder.title}</p>

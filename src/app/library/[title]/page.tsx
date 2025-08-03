@@ -106,7 +106,7 @@ const FlashCards = ({ params }: { params: { title: string } }) => {
             return (
               <Link key={title} href={href}>
                 <input
-                  className="w-full min-[861px]:w-fit bg-mainText border-y-8 border-t-mainText border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary px-5 py-3 sm:py-5 sm:px-10 rounded shadow-md cursor-pointer disabled:bg-gray-300 disabled:hover:border-b-gray-300 disabled:border-t-gray-300 disabled:cursor-not-allowed disabled:text-gray-400"
+                  className="w-full min-[861px]:w-fit bg-mainText border-y-8 border-t-mainText border-b-transparent text-1xl hover:border-b-secondary font-bold text-primary  dark:text-primaryDark  px-5 py-3 sm:py-5 sm:px-10 rounded shadow-md cursor-pointer disabled:bg-gray-300 disabled:hover:border-b-gray-300 disabled:border-t-gray-300 disabled:cursor-not-allowed disabled:text-gray-400"
                   disabled={isDisabled}
                   type="button"
                   onClick={

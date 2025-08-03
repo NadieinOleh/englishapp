@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ flashCards, handleInputChange, removeFlashC
           className={`h-fit w-full flex-col rounded bg-gray-400 mb-5 ${isRemoved === card.id ? 'animate__animated animate__bounceOutRight': ''}`}
           key={card.id}
         >
-          <div className="flex justify-between items-center border-b-2 border-primary p-4">
+          <div className="flex justify-between items-center border-b-2 border-primary dark:border-primaryDark p-4">
             <p className="text-md font-semibold text-gray-200">{++index}</p>
             <button onClick={() => removeFlashCard(card.id)} className="text-md font-semibold text-gray-200">X</button>
           </div>

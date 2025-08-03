@@ -23,7 +23,7 @@ const ButtonSet:FC<ButtonSetProps> = ({createOrEdit, isDisabled, value, style}) 
     ${
       isDisabled
         ? "border-mainText/45 text-secondary/45 bg-gray-600"
-        : "bg-secondary text-primary"
+        : "bg-secondary text-primary dark:text-primaryDark"
     }
   `} />
   )

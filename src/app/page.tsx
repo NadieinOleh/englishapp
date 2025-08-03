@@ -15,13 +15,11 @@ export default function Home() {
   }
 
   return (
-
-    
     <main className="flex flex-col justify-center">
       {status === "unauthenticated" && !session ? (
         <LogIn />
       ) : (
-        <div className="custom-main mt-5">
+        <div className="custom-main  mt-5">
           <h1 className="text-3xl text-center text-secondary mb-2 font-bold animate__animated animate__bounce">
             This app is created as an analogue to Quizlet, for learning foreign
             words.
@@ -57,13 +55,8 @@ export default function Home() {
               </li>
             ))}
           </ul>
-
-
-
         </div>
       )}
     </main>
-
-
   );
 }

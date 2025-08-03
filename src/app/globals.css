@@ -6,6 +6,10 @@
     @apply bg-primary  grow p-2 sm:px-6 lg:px-8 max-w-10xl ;
   }
 
+.custom-mainDark {
+    @apply bg-primaryDark  grow p-2 sm:px-6 lg:px-8 max-w-10xl ;
+  }
+
   .flashcard-inner {
     position: relative;
     width: 100%;

@@ -53,7 +53,7 @@ const Flashcard: FC<FlashCardsProps> = ({
             className="flashcard-front absolute w-full  h-full flex items-center justify-center bg-mainText text-black rounded-lg"
             style={{ backfaceVisibility: "hidden" }}
           >
-            <p className="absolute top-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary font-bold">
+            <p className="absolute top-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary dark:text-primaryDark font-bold">
               {isShuffled ? "FRONT" : "BACK"}
             </p>
             <p className="text-3xl">
@@ -67,7 +67,7 @@ const Flashcard: FC<FlashCardsProps> = ({
             className="flashcard-back absolute w-full h-full flex items-center justify-center bg-mainText text-black rounded-lg transform rotateY-180"
             style={{ backfaceVisibility: "hidden" }}
           >
-            <p className="absolute top-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary font-bold">
+            <p className="absolute top-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary dark:text-primaryDark font-bold">
               {isShuffled ? " BACK" : "FRONT"}
             </p>
             <p className="text-3xl">
@@ -83,7 +83,7 @@ const Flashcard: FC<FlashCardsProps> = ({
         <div className="flex space-x-4">
           <button
             onClick={handlePrevious}
-            className="bg-secondary hover:bg-primaryHover text-primary font-bold px-6 py-2 rounded  flex justify-content items-center shadow-md"
+            className="bg-secondary hover:bg-primaryHover dark:hover:bg-primaryHoverDark text-primary  dark:text-primaryDark font-bold px-6 py-2 rounded  flex justify-content items-center shadow-md"
             disabled={currentIndex === 0}
           >
             ← Previous
@@ -93,7 +93,7 @@ const Flashcard: FC<FlashCardsProps> = ({
           </p>
           <button
             onClick={handleNext}
-            className="bg-secondary hover:bg-primaryHover text-primary font-bold px-6 py-2 rounded  flex justify-content items-center shadow-md"
+            className="bg-secondary hover:bg-primaryHover dark:hover:bg-primaryHoverDark text-primary dark:text-primaryDark font-bold px-6 py-2 rounded  flex justify-content items-center shadow-md"
             disabled={currentIndex === flashcards.length - 1}
           >
             Next →

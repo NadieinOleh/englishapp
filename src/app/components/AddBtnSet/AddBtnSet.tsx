@@ -9,7 +9,7 @@ const AddBtnSet:FC<AddBtnSetProps> = ({addFlashCard}) => {
     <div className="h-fit mb-5 w-full flex-col rounded bg-gray-400 flex justify-center items-center px-4 py-6">
     <button
       onClick={addFlashCard}
-      className="flex justify-center items-center gap-1 border-b-4 border-b-primary text-md font-semibold text-primary hover:border-b-secondary hover:text-secondary"
+      className="flex justify-center items-center gap-1 border-b-4 border-b-primary dark:border-b-primaryDark text-md font-semibold text-primary dark:text-primaryDark hover:border-b-secondary hover:text-secondary"
     >
       <span className="font-bold text-lg">+</span>
       <span className="font-bold ">ADD CARD</span>

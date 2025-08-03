@@ -94,7 +94,7 @@ const SignIn = () => {
                   id="name"
                   name="name"
                   placeholder="Oleh Nadiein"
-                  className="  block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                  className="  block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary dark:focus:ring-primaryDark sm:text-sm sm:leading-6"
                 />
                 <ErrorMessage
                   name="name"
@@ -115,7 +115,7 @@ const SignIn = () => {
                   name="email"
                   placeholder="nadeinolegdev@gmail.com"
                   type="email"
-                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary dark:focus:ring-primaryDark sm:text-sm sm:leading-6"
                 />
                 <ErrorMessage
                   name="email"
@@ -136,7 +136,7 @@ const SignIn = () => {
                   type="password"
                   name="password"
                   placeholder="********"
-                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary dark:focus:ring-primaryDark sm:text-sm sm:leading-6"
                 />
                 <ErrorMessage
                   name="password"
@@ -157,7 +157,7 @@ const SignIn = () => {
                   type="password"
                   name="confirmPassword"
                   placeholder="********"
-                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary dark:focus:ring-primaryDark sm:text-sm sm:leading-6"
                 />
                 <ErrorMessage
                   name="confirmPassword"
@@ -168,7 +168,7 @@ const SignIn = () => {
 
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primaryHover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-primary dark:bg-primaryDark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primaryHover dark:hover:bg-primaryHoverDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign up
               </button>
