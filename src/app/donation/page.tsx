@@ -3,18 +3,16 @@
 import React, { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import PayPalProvider from "./components/PayPalProvider/PayPalProvider";
-
 import { InputForPayment } from "./components/InputForPayment/InputForPayment";
+import { PayPalPolicy } from "./components/PayPalPolicy/PayPalPolicy";
 
 const Donation = () => {
   const [value, setValue] = useState("");
-  const [currency, setCurrency] = useState("USD");
-
-
+  const [currency, setCurrency] = useState("EUR");
 
   return (
-    <div className="custom-main flex justify-evenly mt-8">
-      <div className="">
+    <div className="custom-main flex justify-between gap-6 mt-8 flex-col md:flex-row md:items-start items-center">
+      <div className=" md:w-1/2">
         <h1 className="text-2xl mb-4 text-center text-secondary font-bold">
           You can send charity via{" "}
           <span className="text-[#009CDE]">PayPal</span>{" "}
@@ -27,10 +25,10 @@ const Donation = () => {
           setCurrency={setCurrency}
         />
 
-        <PayPalProvider >
+        <PayPalProvider currency={currency}>
           <div className="">
             <PayPalButtons
-            disabled={!value}
+              disabled={!value}
               style={{
                 layout: "vertical",
                 color: "gold",
@@ -53,18 +51,18 @@ const Donation = () => {
               onApprove={async (data, actions) => {
                 const details = await actions.order?.capture();
                 alert(
-                  "Оплата прошла успешно, " + details?.payer?.name?.given_name
+                  "Success payment, " + details?.payer?.name?.given_name
                 );
               }}
               onError={(err) => {
-                console.error("Ошибка оплаты:", err);
+                console.error("Payment error:", err);
               }}
             />
           </div>
         </PayPalProvider>
       </div>
 
-        <div className="text-center text-secondary">text for paypal</div>
+      <PayPalPolicy />
     </div>
   );
 };

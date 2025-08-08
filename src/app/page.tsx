@@ -48,7 +48,7 @@ export default function Home() {
             {STACKTECH.map((stack) => (
               <li
                 key={stack}
-                className="flex items-center gap-2 bg-gray-100 p-3 rounded-lg text-grey-400 font-bold hover:bg-gray-400 transition"
+                className="flex  items-center gap-2 bg-gray-100 p-3 rounded-lg text-grey-400 font-bold hover:bg-gray-400 transition"
               >
                 <FaCheckCircle className="text-yellow-500" />
                 {stack}

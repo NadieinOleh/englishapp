@@ -80,9 +80,9 @@ export const NavBar = () => {
                           aria-current={current ? "page" : undefined}
                           className={classNames(
                             current
-                              ? "bg-primaryHover dark:bg-primaryHoverDark text-white" // Style for active page
-                              : "text-gray-300 dark:border-primary dark:border-2 hover:bg-secondary hover:text-white", // Style for inactive pages
-                            "rounded-md px-3 py-2 text-sm font-medium"
+                              ? "bg-primaryHover dark:bg-primaryHoverDark text-white" 
+                              : "text-gray-300 dark:border-primary dark:border-2 hover:bg-secondary hover:text-white ", 
+                            "rounded-md px-3 py-2 text-sm font-medium  flex justify-center items-center"
                           )}
                         >
                           {name}
