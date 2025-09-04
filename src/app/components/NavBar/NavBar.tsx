@@ -15,6 +15,7 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ThemeToggle } from "./components/ThemaToggle";
 import { navigation } from "@/utils/constants";
+import Settings from "./components/Settings/Settings";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -24,6 +25,8 @@ export const NavBar = () => {
   const { status, data: session } = useSession();
   const pathname = usePathname();
   const [theme, setTheme] = useState("light");
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [avatar, setAvatar] = useState(session?.user?.image || "/avatar.png");
 
   return (
     <header className="border-b-2 border-secondary">
@@ -80,8 +83,8 @@ export const NavBar = () => {
                           aria-current={current ? "page" : undefined}
                           className={classNames(
                             current
-                              ? "bg-primaryHover dark:bg-primaryHoverDark text-white" 
-                              : "text-gray-300 dark:border-primary dark:border-2 hover:bg-secondary hover:text-white ", 
+                              ? "bg-primaryHover dark:bg-primaryHoverDark text-white"
+                              : "text-gray-300 dark:border-primary dark:border-2 hover:bg-secondary hover:text-white ",
                             "rounded-md px-3 py-2 text-sm font-medium  flex justify-center items-center"
                           )}
                         >
@@ -95,7 +98,7 @@ export const NavBar = () => {
                     href="/"
                     className="animate__animated animate-pulse bg-primaryHover dark:bg-primaryHoverDark text-white rounded-md px-3 py-2 text-sm font-medium flex hover:bg-secondary"
                   >
-                    English App by Oleh Nadiein
+                    Quizlet App by Oleh Nadiein
                   </Link>
                 )}
               </div>
@@ -128,7 +131,7 @@ export const NavBar = () => {
                       <span className="sr-only">Open user menu</span>
                       <Image
                         alt=""
-                        src={session?.user?.image || "/avatar.png"}
+                        src={avatar}
                         width={30}
                         height={30}
                         className="h-8 w-8 rounded-full"
@@ -149,13 +152,14 @@ export const NavBar = () => {
                         {session.user?.email}
                       </p>
                     </Menu.Item>
+
                     <Menu.Item>
-                      <Link
-                        href="#"
-                        className="block px-4 py-2 text-sm text-grey-600 data-[focus]:bg-gray-100"
+                      <button
+                        onClick={() => setIsSettingsOpen(true)}
+                        className="block px-4 py-2 text-sm text-grey-600 data-[focus]:bg-gray-100 w-full text-left"
                       >
                         Settings
-                      </Link>
+                      </button>
                     </Menu.Item>
                   </Menu.Items>
                 </Menu>
@@ -192,6 +196,13 @@ export const NavBar = () => {
           </div>
         </DisclosurePanel>
       </Disclosure>
+
+      <Settings
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        avatar={avatar}
+        setAvatar={setAvatar}
+      />
     </header>
   );
 };
