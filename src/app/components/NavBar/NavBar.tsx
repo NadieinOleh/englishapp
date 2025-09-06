@@ -95,7 +95,7 @@ export const NavBar = () => {
                     href="/"
                     className="animate__animated animate-pulse bg-primaryHover dark:bg-primaryHoverDark text-white rounded-md px-3 py-2 text-sm font-medium flex hover:bg-secondary"
                   >
-                    English App by Oleh Nadiein
+                    Quizlet App by Oleh Nadiein
                   </Link>
                 )}
               </div>
@@ -149,14 +149,7 @@ export const NavBar = () => {
                         {session.user?.email}
                       </p>
                     </Menu.Item>
-                    <Menu.Item>
-                      <Link
-                        href="#"
-                        className="block px-4 py-2 text-sm text-grey-600 data-[focus]:bg-gray-100"
-                      >
-                        Settings
-                      </Link>
-                    </Menu.Item>
+                  
                   </Menu.Items>
                 </Menu>
               )}
