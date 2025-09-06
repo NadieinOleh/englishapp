@@ -15,7 +15,6 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ThemeToggle } from "./components/ThemaToggle";
 import { navigation } from "@/utils/constants";
-import Settings from "./components/Settings/Settings";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -25,28 +24,7 @@ export const NavBar = () => {
   const { status, data: session } = useSession();
   const pathname = usePathname();
   const [theme, setTheme] = useState("light");
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [avatar, setAvatar] = useState<string | null>(null); 
   
-  useEffect(() => {
-    const fetchAvatar = async () => {
-      try {
-        if (!session?.user?.email) return;
-        const res = await fetch("/api/me");
-        if (!res.ok) return;
-        const data = await res.json();
-        setAvatar(data.user.image || "/avatar.png");
-      } catch (err) {
-        console.error("fetch /api/me error:", err);
-        setAvatar("/avatar.png"); 
-      }
-    };
-
-    fetchAvatar();
-  }, [session?.user?.email]);
-
-  if (!avatar) return null; 
-
   return (
     <header className="border-b-2 border-secondary">
       <Disclosure as="nav" className="bg-primary dark:bg-primaryDark">
@@ -151,8 +129,7 @@ export const NavBar = () => {
 
                       <Image
                         alt=""
-                        key={avatar}
-                        src={avatar || "/avatar.png"}
+                        src={session?.user?.image || "/avatar.png"}
                         width={30}
                         height={30}
                         className="h-8 w-8 rounded-full"
@@ -173,14 +150,7 @@ export const NavBar = () => {
                         {session.user?.email}
                       </p>
                     </Menu.Item>
-                    <Menu.Item>
-                      <Link
-                        href="#"
-                        className="block px-4 py-2 text-sm text-grey-600 data-[focus]:bg-gray-100"
-                      >
-                        Settings
-                      </Link>
-                    </Menu.Item>
+                   
                   </Menu.Items>
                 </Menu>
               )}
@@ -217,12 +187,6 @@ export const NavBar = () => {
         </DisclosurePanel>
       </Disclosure>
 
-      <Settings
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        avatar={avatar}
-        setAvatar={setAvatar}
-      />
     </header>
   );
 };
