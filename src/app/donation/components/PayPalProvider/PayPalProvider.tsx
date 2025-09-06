@@ -3,7 +3,7 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 export default function PayPalProvider({
-  currency = "USD",
+  currency = "EUR",
   children,
 }: {
   currency?: string;
