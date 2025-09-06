@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
@@ -15,6 +15,7 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ThemeToggle } from "./components/ThemaToggle";
 import { navigation } from "@/utils/constants";
+import Settings from "./components/Settings/Settings";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -24,6 +25,27 @@ export const NavBar = () => {
   const { status, data: session } = useSession();
   const pathname = usePathname();
   const [theme, setTheme] = useState("light");
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [avatar, setAvatar] = useState<string | null>(null); 
+  
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        if (!session?.user?.email) return;
+        const res = await fetch("/api/me");
+        if (!res.ok) return;
+        const data = await res.json();
+        setAvatar(data.user.image || "/avatar.png");
+      } catch (err) {
+        console.error("fetch /api/me error:", err);
+        setAvatar("/avatar.png"); 
+      }
+    };
+
+    fetchAvatar();
+  }, [session?.user?.email]);
+
+  if (!avatar) return null; 
 
   return (
     <header className="border-b-2 border-secondary">
@@ -55,7 +77,7 @@ export const NavBar = () => {
                       height={30}
                       src="/logoOrange.svg"
                       alt="logo"
-                      className=" mr-2"
+                      className="w:auto h:auto mr-2"
                     />
                   ) : (
                     <Image
@@ -63,7 +85,7 @@ export const NavBar = () => {
                       height={30}
                       src="/logoDark.svg"
                       alt="logo"
-                      className=" mr-2"
+                      className="w:auto h:auto mr-2"
                     />
                   )}
                 </Link>
@@ -80,8 +102,8 @@ export const NavBar = () => {
                           aria-current={current ? "page" : undefined}
                           className={classNames(
                             current
-                              ? "bg-primaryHover dark:bg-primaryHoverDark text-white" 
-                              : "text-gray-300 dark:border-primary dark:border-2 hover:bg-secondary hover:text-white ", 
+                              ? "bg-primaryHover dark:bg-primaryHoverDark text-white"
+                              : "text-gray-300 dark:border-primary dark:border-2 hover:bg-secondary hover:text-white ",
                             "rounded-md px-3 py-2 text-sm font-medium  flex justify-center items-center"
                           )}
                         >
@@ -126,9 +148,11 @@ export const NavBar = () => {
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
+
                       <Image
                         alt=""
-                        src={session?.user?.image || "/avatar.png"}
+                        key={avatar}
+                        src={avatar || "/avatar.png"}
                         width={30}
                         height={30}
                         className="h-8 w-8 rounded-full"
@@ -149,7 +173,14 @@ export const NavBar = () => {
                         {session.user?.email}
                       </p>
                     </Menu.Item>
-                  
+                    <Menu.Item>
+                      <Link
+                        href="#"
+                        className="block px-4 py-2 text-sm text-grey-600 data-[focus]:bg-gray-100"
+                      >
+                        Settings
+                      </Link>
+                    </Menu.Item>
                   </Menu.Items>
                 </Menu>
               )}
@@ -185,6 +216,13 @@ export const NavBar = () => {
           </div>
         </DisclosurePanel>
       </Disclosure>
+
+      <Settings
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        avatar={avatar}
+        setAvatar={setAvatar}
+      />
     </header>
   );
 };

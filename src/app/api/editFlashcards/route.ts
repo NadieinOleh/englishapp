@@ -9,6 +9,7 @@ export async function PUT(req: NextRequest) {
     await connectMongoDb();
 
     const session = await getServerSession(authOptions);
+    
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

@@ -73,7 +73,8 @@ export const TECHNOLOGIES = [
   "Flip",
   "There are pages with tips",
   "Make a donate",
-  "Switch theme"
+  "Switch theme",
+  "Change your Avatar"
 ];
 
 export const STACKTECH = [
