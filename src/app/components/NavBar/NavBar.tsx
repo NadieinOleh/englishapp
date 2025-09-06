@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
@@ -26,7 +26,26 @@ export const NavBar = () => {
   const pathname = usePathname();
   const [theme, setTheme] = useState("light");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [avatar, setAvatar] = useState(session?.user?.image || "/avatar.png");
+  const [avatar, setAvatar] = useState<string | null>(null); 
+  
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        if (!session?.user?.email) return;
+        const res = await fetch("/api/me");
+        if (!res.ok) return;
+        const data = await res.json();
+        setAvatar(data.user.image || "/avatar.png");
+      } catch (err) {
+        console.error("fetch /api/me error:", err);
+        setAvatar("/avatar.png"); 
+      }
+    };
+
+    fetchAvatar();
+  }, [session?.user?.email]);
+
+  if (!avatar) return null; 
 
   return (
     <header className="border-b-2 border-secondary">
@@ -58,7 +77,7 @@ export const NavBar = () => {
                       height={30}
                       src="/logoOrange.svg"
                       alt="logo"
-                      className=" mr-2"
+                      className="w:auto h:auto mr-2"
                     />
                   ) : (
                     <Image
@@ -66,7 +85,7 @@ export const NavBar = () => {
                       height={30}
                       src="/logoDark.svg"
                       alt="logo"
-                      className=" mr-2"
+                      className="w:auto h:auto mr-2"
                     />
                   )}
                 </Link>
@@ -129,9 +148,11 @@ export const NavBar = () => {
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
+
                       <Image
                         alt=""
-                        src={avatar}
+                        key={avatar}
+                        src={avatar || "/avatar.png"}
                         width={30}
                         height={30}
                         className="h-8 w-8 rounded-full"

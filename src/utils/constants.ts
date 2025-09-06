@@ -74,7 +74,8 @@ export const TECHNOLOGIES = [
   "There are pages with tips",
   "In the near future it will be possible to make Donations and use the account customisation function",
   "Make a donate",
-  "Switch theme"
+  "Switch theme",
+  "Change your Avatar"
 ];
 
 export const STACKTECH = [

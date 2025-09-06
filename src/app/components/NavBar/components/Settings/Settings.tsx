@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { FC, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -25,7 +27,7 @@ const SettingsModal: FC<SettingsModalProps> = ({ isOpen, onClose, avatar, setAva
     const reader = new FileReader();
     reader.onloadend = () => {
       setFileBase64(reader.result as string);
-      setAvatar(reader.result as string);
+      setAvatar(reader.result as string); // показываем превью сразу
     };
     reader.readAsDataURL(file);
   };
@@ -40,7 +42,9 @@ const SettingsModal: FC<SettingsModalProps> = ({ isOpen, onClose, avatar, setAva
     });
 
     const data = await res.json();
+
     if (data.success) {
+      // обновляем путь на сохранённый на сервере
       setAvatar(data.user.image);
       await update({ ...session?.user, image: data.user.image });
       onClose();
@@ -48,28 +52,16 @@ const SettingsModal: FC<SettingsModalProps> = ({ isOpen, onClose, avatar, setAva
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75"
-      onClick={onClose}
-    >
-      <div
-        className="w-full max-w-md rounded-lg mx-5  bg-white dark:bg-gray-800 p-6 shadow-lg"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75" onClick={onClose}>
+      <div className="w-full max-w-md rounded-lg mx-5 bg-white dark:bg-gray-800 p-6 shadow-lg" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-secondary dark:text-secondary">
-            Settings
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-secondary hover:text-gray-800 dark:hover:text-white text-2xl font-bold"
-          >
-            ×
-          </button>
+          <h2 className="text-2xl font-bold text-secondary dark:text-secondary">Settings</h2>
+          <button onClick={onClose} className="text-secondary hover:text-gray-800 dark:hover:text-white text-2xl font-bold">×</button>
         </div>
 
         <div className="flex flex-col items-center mb-6">
           <Image
+            key={avatar} 
             alt="Avatar"
             src={avatar}
             width={100}
@@ -83,12 +75,7 @@ const SettingsModal: FC<SettingsModalProps> = ({ isOpen, onClose, avatar, setAva
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="block text-sm text-gray-900 dark:text-gray-300
-                       file:mr-4 file:py-2 file:px-4
-                       file:rounded-md file:border-0
-                       file:text-sm file:font-semibold
-                       file:bg-primary file:text-white
-                       hover:file:bg-secondary"
+            className="block text-sm text-gray-900 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-secondary"
           />
         </div>
 
